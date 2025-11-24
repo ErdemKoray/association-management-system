@@ -1,4 +1,4 @@
-namespace Namespace.Domain.Common
+namespace AMS.Domain.Common
 {
     public abstract class BaseEntity : IEntity, IAuditableEntity, ISoftDeletable
     {
