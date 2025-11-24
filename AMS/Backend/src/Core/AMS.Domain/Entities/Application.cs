@@ -1,5 +1,6 @@
+using AMS.Doamin.Enums;
 using AMS.Domain.Common;
-
+using AMS.Domain.Enums;
 namespace AMS.Domain.Entities
 {
     public class Application : BaseEntity
@@ -10,7 +11,7 @@ namespace AMS.Domain.Entities
         public string Email { get; set; } = null!;
         public string? Reason { get; set; } 
         
-        public string Status { get; set; } = "Pending"; 
+       public ApplicationStatus Status {get;set;}
         
         public DateTime ApplicationDate { get; set; }
     }

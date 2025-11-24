@@ -1,4 +1,6 @@
+using AMS.Doamin.Enums;
 using AMS.Domain.Common;
+using AMS.Domain.Enums;
 
 namespace AMS.Domain.Entities
 {
@@ -12,7 +14,7 @@ namespace AMS.Domain.Entities
       
         public string? ReceiptUrl { get; set; } 
         
-        public string PaymentType { get; set; } = null!; 
+        public PaymentType PaymentType {get;set;}
         
 
         public bool IsVerified { get; set; } = false;

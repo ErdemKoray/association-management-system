@@ -1,12 +1,12 @@
 using AMS.Domain.Common;
-
+using AMS.Domain.Enums;
 namespace AMS.Domain.Entities
 {
-    public class User : BaseEntity
+    public class Manager : BaseEntity
     {
         public string Username { get; set; } = null!;
         public string PasswordHash { get; set; } = null!;
-        public string Role { get; set; } = "Admin"; 
+        public  UserRole Role {get;set;}=UserRole.Admin;
         public DateTime LastLoginDate { get; set; }
     }
 }
