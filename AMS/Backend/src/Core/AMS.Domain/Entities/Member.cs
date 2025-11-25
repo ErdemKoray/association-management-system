@@ -4,7 +4,7 @@ namespace AMS.Domain.Entities
 {
     public class Member : BaseEntity
     {
-        public string TCNumber { get; set; } = null!;
+        public string IdentityNumber { get; set; } = null!;
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string Phone { get; set; } = null!; 

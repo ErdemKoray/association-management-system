@@ -2,7 +2,7 @@ using AMS.Domain.Common;
 using AMS.Domain.Enums;
 namespace AMS.Domain.Entities
 {
-    public class Manager : BaseEntity
+    public class Account : BaseEntity
     {
         public string Username { get; set; } = null!;
         public string PasswordHash { get; set; } = null!;
