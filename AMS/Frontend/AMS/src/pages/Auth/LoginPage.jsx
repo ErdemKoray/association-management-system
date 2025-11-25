@@ -60,10 +60,8 @@ const LoginPage = () => {
           Ana Sayfaya Dön
         </Link>
 
-        {/* Login Formu */}
         <div className="bg-white/80 backdrop-blur-xl border border-white/50 shadow-2xl rounded-3xl p-8 md:p-10">
           
-          {/* Logo ve Başlık */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-[#54bd95]/10 text-[#54bd95] rounded-2xl mb-4">
               <Wallet size={32} />
@@ -74,7 +72,6 @@ const LoginPage = () => {
             </p>
           </div>
 
-          {/* Hata Mesajı */}
           {error && (
             <div className="mb-6 p-4 bg-red-50 border border-red-100 text-red-600 rounded-xl flex items-center gap-3 animate-pulse">
               <div className="w-2 h-2 bg-red-500 rounded-full"></div>
@@ -84,7 +81,6 @@ const LoginPage = () => {
 
           <form onSubmit={handleLogin} className="space-y-6">
             
-            {/* TC Kimlik Input */}
             <div className="space-y-2">
               <label className="text-gray-700 font-semibold ml-1 block">
                 TC Kimlik / Üye No
