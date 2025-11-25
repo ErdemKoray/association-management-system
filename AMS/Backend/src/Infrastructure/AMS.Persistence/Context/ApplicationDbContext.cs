@@ -16,13 +16,12 @@ namespace AMS.Persistence.Contexts
         {
         }
         public DbSet<Member> Members { get; set; }
-        public DbSet<Application> Applications { get; set; }
-        public DbSet<Event> Events { get; set; }
+        public DbSet<AMS.Domain.Entities.Application> Applications { get; set; }
         public DbSet<Due> Dues { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-        
+        public DbSet<Account> Accounts { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
