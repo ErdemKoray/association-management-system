@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace AMS.Application.Common.Models
+namespace AMS.Application.Common.Model
 {
     public class ServiceResult
     {

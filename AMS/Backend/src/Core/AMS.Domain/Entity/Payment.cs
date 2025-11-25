@@ -1,20 +1,19 @@
-using AMS.Doamin.Enums;
 using AMS.Domain.Common;
-
-namespace AMS.Domain.Entities
+using AMS.Domain.Enum;
+namespace AMS.Domain.Entity
 {
     public class Payment : BaseEntity
     {
         public int MemberId { get; set; }
-        public int? DueId { get; set; } 
+        public int? DueId { get; set; }
         public decimal Amount { get; set; }
         public DateTime PaymentDate { get; set; }
-        
-      
-        public string? ReceiptUrl { get; set; } 
-        
-        public PaymentType PaymentType {get;set;}
-        
+
+
+        public string? ReceiptUrl { get; set; }
+
+        public AMS.Domain.Enum.PaymentType PaymentType { get; set; }
+
 
         public bool IsVerified { get; set; } = false;
 

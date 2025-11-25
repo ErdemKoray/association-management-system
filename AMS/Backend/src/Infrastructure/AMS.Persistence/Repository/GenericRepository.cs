@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using AMS.Application.Common.Interfaces.Repositories;
+using AMS.Application.Common.Interface.Repository;
 using AMS.Domain.Common;
-using AMS.Persistence.Contexts;
+using AMS.Persistence.Context;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AMS.Persistence.Repositories
+namespace AMS.Persistence.Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {

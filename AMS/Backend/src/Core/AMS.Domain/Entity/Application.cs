@@ -1,6 +1,6 @@
-using AMS.Doamin.Enums;
+using AMS.Domain.Enum;
 using AMS.Domain.Common;
-namespace AMS.Domain.Entities
+namespace AMS.Domain.Entity
 {
     public class Application : BaseEntity
     {
@@ -8,10 +8,10 @@ namespace AMS.Domain.Entities
         public string LastName { get; set; } = null!;
         public string Phone { get; set; } = null!;
         public string Email { get; set; } = null!;
-        public string? Reason { get; set; } 
-        
-       public ApplicationStatus Status {get;set;}
-        
+        public string? Reason { get; set; }
+
+        public AMS.Domain.Enum.ApplicationStatus Status { get; set; }
+
         public DateTime ApplicationDate { get; set; }
     }
 }

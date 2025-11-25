@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AMS.Application.Common.Interfaces.Repositories
+namespace AMS.Application.Common.Interface.Repository
 {
     public interface IUnitOfWork
     {

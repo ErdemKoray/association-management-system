@@ -1,10 +1,10 @@
-using AMS.Application.Common.Interfaces.Repositories;
-using AMS.Domain.Entities;
-using AMS.Persistence.Contexts;
+using AMS.Application.Common.Interface.Repository;
+using AMS.Domain.Entity;
+using AMS.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace AMS.Persistence.Repositories
+namespace AMS.Persistence.Repository
 {
     public class MemberRepository : GenericRepository<Member>, IMemberRepository
     {

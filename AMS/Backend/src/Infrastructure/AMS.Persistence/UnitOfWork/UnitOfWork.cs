@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
-using AMS.Application.Common.Interfaces.Repositories;
-using AMS.Persistence.Contexts;
+using AMS.Application.Common.Interface.Repository;
+using AMS.Persistence.Context;
 
-namespace AMS.Persistence.Repositories
+namespace AMS.Persistence.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {

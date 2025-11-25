@@ -3,11 +3,11 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using AMS.Application.Common.Interfaces;
+using AMS.Application.Common.Interface;
 using AMS.Domain.Common;
-using AMS.Domain.Entities;
+using AMS.Domain.Entity;
 
-namespace AMS.Persistence.Contexts
+namespace AMS.Persistence.Context
 {
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
@@ -16,7 +16,7 @@ namespace AMS.Persistence.Contexts
         {
         }
         public DbSet<Member> Members { get; set; }
-        public DbSet<AMS.Domain.Entities.Application> Applications { get; set; }
+        public DbSet<AMS.Domain.Entity.Application> Applications { get; set; }
         public DbSet<Due> Dues { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Payment> Payments { get; set; }

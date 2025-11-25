@@ -1,4 +1,4 @@
-namespace AMS.Domain.Enums
+namespace AMS.Domain.Enum
 {
     public enum FeedbackType
     {

@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using AMS.Application.Common.Interfaces;
-using AMS.Persistence.Contexts;
+using AMS.Application.Common.Interface.Repository;
+using AMS.Persistence.Context;
+using AMS.Application.Common.Interface;
+using AMS.Application.Common.Interface.Repository;
+using AMS.Persistence.Repository;
 
 namespace AMS.Persistence
 {

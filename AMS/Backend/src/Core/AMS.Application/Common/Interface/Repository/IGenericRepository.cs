@@ -2,7 +2,7 @@ using AMS.Domain.Common;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AMS.Application.Common.Interface.Repositorie
+namespace AMS.Application.Common.Interface.Repository
 {
     public interface IGenericRepository<T> where T : BaseEntity
     {

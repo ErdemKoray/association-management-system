@@ -1,5 +1,5 @@
 using AMS.Domain.Common;
-namespace AMS.Domain.Entities
+namespace AMS.Domain.Entity
 {
     public class Transaction : BaseEntity
     {

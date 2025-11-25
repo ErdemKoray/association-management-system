@@ -1,7 +1,7 @@
-using AMS.Domain.Entities;
+using AMS.Domain.Entity;
 using System.Threading.Tasks;
 
-namespace AMS.Application.Common.Interfaces.Repositories
+namespace AMS.Application.Common.Interface.Repository
 {
     public interface IMemberRepository : IGenericRepository<Member>
     {
