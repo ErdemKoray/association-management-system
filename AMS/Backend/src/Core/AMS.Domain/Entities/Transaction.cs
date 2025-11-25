@@ -1,5 +1,4 @@
 using AMS.Domain.Common;
-using AMS.Domain.Enums;
 namespace AMS.Domain.Entities
 {
     public class Transaction : BaseEntity
