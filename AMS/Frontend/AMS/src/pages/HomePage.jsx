@@ -6,40 +6,35 @@ import {
   History,
   Megaphone,
   LogIn,
-  ArrowRight,
   Calendar,
   Wallet,
-  MessageSquare, // Yeni
-  Send, // Yeni
-  PenTool, // Yeni
-  User, // Yeni
+  MessageSquare,
+  Send,
+  PenTool,
+  User,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
+import Skeleton from '@/components/ui/Skeleton';
+import { X } from 'lucide-react';
+import { useEffect } from 'react'
 const HomePage = () => {
-  // --- STATE YÖNETİMİ ---
-
-  // 1. Arama ve Üye Bilgileri
   const [searchId, setSearchId] = useState('');
   const [loading, setLoading] = useState(false);
+  const [searching,setSearching] = useState(false)
   const [memberData, setMemberData] = useState(null);
+const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
 
-  // 2. Geri Bildirim Formu
   const [feedbackForm, setFeedbackForm] = useState({ name: '', message: '' });
   const [feedbackLoading, setFeedbackLoading] = useState(false);
   const [feedbackSuccess, setFeedbackSuccess] = useState(false);
 
-  // --- FONKSİYONLAR ---
-
-  // Arama Fonksiyonu (Simülasyon)
   const handleSearch = (e) => {
     e.preventDefault();
     if (!searchId) return;
 
-    setLoading(true);
+    setSearching(true);
 
     setTimeout(() => {
-      // 123 ise borçlu, diğerleri temiz
       if (searchId === '123') {
         setMemberData({
           name: 'Ahmet Yılmaz',
@@ -53,6 +48,7 @@ const HomePage = () => {
           ],
         });
       } else {
+        setLoading(false)
         setMemberData({
           name: 'Zeynep Kaya',
           status: 'paid',
@@ -64,11 +60,31 @@ const HomePage = () => {
           ],
         });
       }
-      setLoading(false);
+      setSearching(false);
     }, 1000);
   };
 
-  // Geri Bildirim Gönderme (Simülasyon)
+  const announcements = [
+    {
+      id: 1,
+      tag: "Bina Yönetimi",
+      tagColor: "text-[#54bd95] bg-[#54bd95]/10",
+      time: "2 Saat önce",
+      title: "Çatı Bakım Onarımı",
+      summary: "Bina çatısında yapılacak olan izolasyon çalışmaları nedeniyle...",
+      fullText: "Bina çatısında yapılacak olan izolasyon çalışmaları nedeniyle hafta sonu gürültü olabilir. Çalışmalar Cumartesi sabah 09:00'da başlayıp Pazar akşamı 17:00'da bitecektir. Anlayışınız için teşekkür ederiz."
+    },
+    {
+      id: 2,
+      tag: "Ödeme",
+      tagColor: "text-orange-500 bg-orange-100",
+      time: "1 Gün önce",
+      title: "Aidat Artışı Hakkında",
+      summary: "Genel kurul toplantısında alınan karar gereği, önümüzdeki aydan itibaren...",
+      fullText: "Genel kurul toplantısında alınan karar gereği, artan enerji ve bakım maliyetleri sebebiyle aidatlara %20 oranında zam yapılmasına karar verilmiştir. Yeni aidat tutarları önümüzdeki aydan itibaren geçerli olacaktır."
+    }
+  ];
+
   const handleFeedbackSubmit = (e) => {
     e.preventDefault();
     if (!feedbackForm.name || !feedbackForm.message) return;
@@ -78,21 +94,18 @@ const HomePage = () => {
     setTimeout(() => {
       setFeedbackLoading(false);
       setFeedbackSuccess(true);
-      setFeedbackForm({ name: '', message: '' }); // Formu sıfırla
+      setFeedbackForm({ name: '', message: '' });
 
-      // 3 saniye sonra başarı mesajını kaldır
       setTimeout(() => setFeedbackSuccess(false), 3000);
     }, 1500);
   };
 
   return (
     <div className="relative min-h-screen bg-gray-50 overflow-hidden font-sans text-gray-800">
-      {/* --- ARKA PLAN EFEKTLERİ --- */}
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-[#54bd95] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
       <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
       <div className="absolute bottom-[-20%] left-[20%] w-[600px] h-[600px] bg-[#54bd95] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
 
-      {/* --- NAVBAR --- */}
       <nav className="relative z-10 flex justify-between items-center p-6 container mx-auto">
         <div className="flex items-center gap-2">
           <div className="bg-[#54bd95] p-2 rounded-lg text-white shadow-lg shadow-[#54bd95]/20">
@@ -112,19 +125,25 @@ const HomePage = () => {
         </Link>
       </nav>
 
-      {/* --- GRID YAPISI --- */}
       <main className="relative z-10 container mx-auto px-6 py-8 grid lg:grid-cols-12 gap-8">
-        {/* === SOL KOLON: SORGULAMA & DURUM (7/12) === */}
         <div className="lg:col-span-7 space-y-6">
-          {/* 1. Sorgulama Kartı */}
-          <div className="bg-white/70 backdrop-blur-md border border-white/50 p-8 rounded-3xl shadow-xl">
-            <h1 className="text-3xl font-bold mb-2 text-gray-800">
-              Hızlı <span className="text-[#54bd95]">Aidat Sorgula</span>
-            </h1>
-            <p className="text-gray-500 mb-6">
-              TC Kimlik veya Daire numaranızı girerek güncel borç durumunuzu öğrenebilirsiniz.
-            </p>
+          <div className="animate-slide-down bg-white/70 backdrop-blur-md border border-white/50 p-8 rounded-3xl shadow-xl">
+            {loading ? (
+              <>
+                <Skeleton className="h-10 w-3/4 mb-2" />
 
+                <Skeleton className="h-5 w-full mb-6" />
+              </>
+            ) : (
+              <>
+                <h1 className="text-3xl font-bold mb-2 text-gray-800">
+                  <span className="text-[#54bd95]">Aidat Sorgulama</span>
+                </h1>
+                <p className="text-gray-500 mb-6">
+                  TC Kimlik veya Daire numaranızı girerek güncel borç durumunuzu öğrenebilirsiniz.
+                </p>
+              </>
+            )}
             <form onSubmit={handleSearch} className="relative">
               <input
                 type="text"
@@ -140,18 +159,16 @@ const HomePage = () => {
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={searching}
                 className="absolute right-2 top-2 bottom-2 bg-[#54bd95] hover:bg-[#43a07d] text-white px-6 rounded-lg font-semibold transition-all shadow-md disabled:opacity-70 flex items-center gap-2"
               >
-                {loading ? 'Aranıyor...' : 'Sorgula'}
+                {searching ? 'Aranıyor...' : 'Sorgula'}
               </button>
             </form>
           </div>
 
-          {/* 2. Sonuç Alanı (Veri Varsa Görünür) */}
           {memberData && (
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-6">
-              {/* Durum Özeti */}
               <div
                 className={`p-6 rounded-3xl border shadow-lg backdrop-blur-md flex items-center justify-between ${
                   memberData.status === 'paid'
@@ -191,7 +208,6 @@ const HomePage = () => {
                 </div>
               </div>
 
-              {/* Geçmiş İşlemler Listesi */}
               <div className="bg-white/70 backdrop-blur-md border border-white/50 p-6 rounded-3xl shadow-lg">
                 <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-gray-700">
                   <History size={20} className="text-[#54bd95]" />
@@ -223,10 +239,8 @@ const HomePage = () => {
           )}
         </div>
 
-        {/* === SAĞ KOLON: DUYURULAR & FEEDBACK (5/12) === */}
         <div className="lg:col-span-5 space-y-8">
-          {/* 3. Duyurular Kartı */}
-          <div className="bg-[#54bd95]/10 backdrop-blur-xl border border-[#54bd95]/20 p-8 rounded-3xl shadow-xl">
+          <div className="animate-slide-down bg-[#54bd95]/10 backdrop-blur-xl border border-[#54bd95]/20 p-8 rounded-3xl shadow-xl">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
                 <Megaphone className="text-[#54bd95]" />
@@ -237,44 +251,27 @@ const HomePage = () => {
               </span>
             </div>
 
-            <div className="space-y-4">
-              {/* Duyuru Item 1 */}
-              <div className="group bg-white/60 hover:bg-white p-5 rounded-2xl transition-all cursor-pointer border border-transparent hover:border-[#54bd95]/30 shadow-sm">
-                <div className="flex justify-between items-start mb-2">
-                  <span className="text-xs font-bold text-[#54bd95] bg-[#54bd95]/10 px-2 py-1 rounded-md">
-                    Bina Yönetimi
-                  </span>
-                  <span className="text-xs text-gray-400">2 Saat önce</span>
-                </div>
-                <h3 className="font-bold text-gray-800 mb-1 group-hover:text-[#54bd95] transition-colors">
-                  Çatı Bakım Onarımı
-                </h3>
-                <p className="text-sm text-gray-500 line-clamp-2">
-                  Bina çatısında yapılacak olan izolasyon çalışmaları nedeniyle hafta sonu...
-                </p>
-              </div>
-
-              {/* Duyuru Item 2 */}
-              <div className="group bg-white/60 hover:bg-white p-5 rounded-2xl transition-all cursor-pointer border border-transparent hover:border-[#54bd95]/30 shadow-sm">
-                <div className="flex justify-between items-start mb-2">
-                  <span className="text-xs font-bold text-orange-500 bg-orange-100 px-2 py-1 rounded-md">
-                    Ödeme
-                  </span>
-                  <span className="text-xs text-gray-400">1 Gün önce</span>
-                </div>
-                <h3 className="font-bold text-gray-800 mb-1 group-hover:text-[#54bd95] transition-colors">
-                  Aidat Artışı Hakkında
-                </h3>
-                <p className="text-sm text-gray-500 line-clamp-2">
-                  Genel kurul toplantısında alınan karar gereği, önümüzdeki aydan itibaren...
-                </p>
-              </div>
+         <div className="space-y-4">
+              {loading ? (
+                <>
+                   <AnnouncementSkeleton />
+                   <AnnouncementSkeleton />
+                </>
+              ) : (
+                <>
+                  {announcements.map((item) => (
+                    <AnnouncementCard 
+                      key={item.id} 
+                      data={item} 
+                      onClick={() => setSelectedAnnouncement(item)} 
+                    />
+                  ))}
+                </>
+              )}
             </div>
           </div>
 
-          {/* 4. Şikayet & Öneri Kutusu (YENİ EKLENEN KISIM) */}
-          <div className="bg-white/70 backdrop-blur-md border border-white/50 p-8 rounded-3xl shadow-xl relative overflow-hidden">
-            {/* Dekorasyon */}
+          <div className="animate-slide-down2 bg-white/70 backdrop-blur-md border border-white/50 p-8 rounded-3xl shadow-xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#54bd95]/10 rounded-bl-full -mr-4 -mt-4 pointer-events-none"></div>
 
             <div className="relative z-10">
@@ -288,7 +285,6 @@ const HomePage = () => {
                 </div>
               </div>
 
-              {/* Başarılı Ekranı veya Form */}
               {feedbackSuccess ? (
                 <div className="bg-green-50 border border-green-100 rounded-2xl p-8 text-center animate-in zoom-in duration-300">
                   <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -301,7 +297,6 @@ const HomePage = () => {
                 </div>
               ) : (
                 <form onSubmit={handleFeedbackSubmit} className="space-y-4">
-                  {/* Ad Soyad */}
                   <div className="relative group">
                     <div className="absolute left-4 top-4 text-gray-400 group-focus-within:text-[#54bd95] transition-colors">
                       <User size={20} />
@@ -316,7 +311,6 @@ const HomePage = () => {
                     />
                   </div>
 
-                  {/* Mesaj Alanı */}
                   <div className="relative group">
                     <div className="absolute left-4 top-4 text-gray-400 group-focus-within:text-[#54bd95] transition-colors">
                       <PenTool size={20} />
@@ -333,7 +327,6 @@ const HomePage = () => {
                     ></textarea>
                   </div>
 
-                  {/* Gönder Butonu */}
                   <button
                     type="submit"
                     disabled={feedbackLoading}
@@ -353,8 +346,112 @@ const HomePage = () => {
           </div>
         </div>
       </main>
+      <Modal 
+        isOpen={!!selectedAnnouncement} 
+        onClose={() => setSelectedAnnouncement(null)}
+        title={selectedAnnouncement?.title}
+      >
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 mb-2">
+             <span className={`text-xs font-bold px-2 py-1 rounded-md ${selectedAnnouncement?.tagColor}`}>
+                {selectedAnnouncement?.tag}
+             </span>
+             <span className="text-xs text-gray-400">{selectedAnnouncement?.time}</span>
+          </div>
+          
+          <p className="text-gray-600 leading-relaxed">
+            {selectedAnnouncement?.fullText}
+          </p>
+          
+          <div className="pt-4 border-t border-gray-100 flex justify-end">
+            <button 
+              onClick={() => setSelectedAnnouncement(null)}
+              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors"
+            >
+              Tamam
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
 
 export default HomePage;
+
+const AnnouncementSkeleton = () => {
+  return (
+    <div className="bg-white/40 p-5 rounded-2xl border border-transparent">
+      <div className="flex justify-between items-start mb-2">
+        <Skeleton className="h-4 w-20" />
+        <Skeleton className="h-3 w-12" />
+      </div>
+      <Skeleton className="h-5 w-3/4 mb-2" />
+      <Skeleton className="h-4 w-full mb-1" />
+      <Skeleton className="h-4 w-2/3" />
+    </div>
+  );
+};
+
+const AnnouncementCard = ({ data, onClick }) => {
+  return (
+    <div 
+      onClick={onClick}
+      className="group bg-white/60 hover:bg-white p-5 rounded-2xl transition-all cursor-pointer border border-transparent hover:border-[#54bd95]/30 shadow-sm"
+    >
+      <div className="flex justify-between items-start mb-2">
+        <span className={`text-xs font-bold px-2 py-1 rounded-md ${data.tagColor}`}>
+          {data.tag}
+        </span>
+        <span className="text-xs text-gray-400">{data.time}</span>
+      </div>
+      <h3 className="font-bold text-gray-800 mb-1 group-hover:text-[#54bd95] transition-colors">
+        {data.title}
+      </h3>
+      <p className="text-sm text-gray-500 line-clamp-2">
+        {data.summary}
+      </p>
+    </div>
+  );
+};
+
+;
+
+const Modal = ({ isOpen, onClose, title, children }) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+      
+      <div className="absolute inset-0" onClick={onClose}></div>
+
+      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-200">
+        
+        <div className="flex items-center justify-between p-4 border-b border-gray-100">
+          <h3 className="text-lg font-bold text-gray-800">{title}</h3>
+          <button 
+            onClick={onClose}
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-500"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        <div className="p-6 max-h-[80vh] overflow-y-auto">
+          {children}
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
