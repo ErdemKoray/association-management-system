@@ -1,2 +1,19 @@
 @import "tailwindcss";
 
+@theme {
+  /* Animasyon Tanımı */
+  --animate-slide-down: slideDown 0.8s ease-out forwards;
+  --animate-slide-down2: slideDown 1.8s ease-out forwards;
+
+  /* Keyframe Tanımı */
+  @keyframes slideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
