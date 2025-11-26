@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using AMS.Application.Common.Interface.Repository;
 using AMS.Persistence.Context;
 using AMS.Application.Common.Interface;
-using AMS.Application.Common.Interface.Repository;
 using AMS.Persistence.Repository;
 
 namespace AMS.Persistence
@@ -21,7 +20,12 @@ namespace AMS.Persistence
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            
+    
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            
+           
+            services.AddScoped<IDueRepository, DueRepository>();
             
             return services;
         }
